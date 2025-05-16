@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'menu.dart';
 
 class Login extends StatefulWidget {
@@ -40,7 +41,7 @@ class _LoginState extends State<Login> {
                       textAlign: TextAlign.center,
                     ),
 
-                    SizedBox(height: 10),
+                    SizedBox(height: 30),
 
                     //customer ID input field
                     Text(
@@ -52,6 +53,7 @@ class _LoginState extends State<Login> {
                       ),
                       textAlign: TextAlign.center,
                     ),
+                    SizedBox(height: 10),
                     TextField(
                       cursorColor: Color(0xFF4F46E5),
                       style: TextStyle(color: Colors.white),
@@ -78,20 +80,28 @@ class _LoginState extends State<Login> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    TextField(
+                    SizedBox(height: 10),
+                    PinCodeTextField(
+                      appContext: context,
+                      length: 6,
                       cursorColor: Color(0xFF4F46E5),
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        isDense: true,
-                        filled: true,
-                        fillColor: Color(0xFF111827),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent),
-                        ),
+                      textStyle: TextStyle(color: Colors.white),
+                      enableActiveFill: true,
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.box,
+                        borderRadius: BorderRadius.circular(8),
+                        fieldHeight: 50,
+                        fieldWidth: 40,
+                        activeColor: Color(0xFF4F46E5),
+                        inactiveColor: Color(0xFF111827),
+                        selectedColor: Colors.white,
+                        activeFillColor: Color(0xFF111827),     // filled when typing
+                        inactiveFillColor: Color(0xFF111827), // initial state
+                        selectedFillColor: Color(0xFF111827),
                       ),
                     ),
 
-                    SizedBox(height: 50),
+                    SizedBox(height: 20),
 
                     //login-button
                     RawMaterialButton(
@@ -104,7 +114,7 @@ class _LoginState extends State<Login> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                         side: BorderSide(
-                          color: Colors.white, // 👈 your border color
+                          color: Colors.white,
                           width: 2,
                         ),
                       ),
