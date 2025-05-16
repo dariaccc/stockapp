@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
 import 'radar.dart';
 import 'home.dart';
+import 'proversion.dart';
+import 'dashboard.dart';
 
 class Navigation extends StatefulWidget {
   //const Navigation({Key? key}) : super(key: key);
@@ -21,6 +22,8 @@ class _NavigationState extends State<Navigation> {
           children: [
             Home(),
             Radar(),
+            Pro(),
+            Dashboard(),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
