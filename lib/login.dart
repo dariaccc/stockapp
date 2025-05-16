@@ -29,6 +29,7 @@ class _LoginState extends State<Login> {
                 width: 300,
                 child: Column(
                   children: [
+
                     Text(
                       "LOGIN",
                       style: TextStyle(
@@ -38,7 +39,10 @@ class _LoginState extends State<Login> {
                       ),
                       textAlign: TextAlign.center,
                     ),
+
                     SizedBox(height: 10),
+
+                    //customer ID input field
                     Text(
                       "Customer ID",
                       style: TextStyle(
@@ -48,9 +52,48 @@ class _LoginState extends State<Login> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    TextField(),
+                    TextField(
+                      cursorColor: Color(0xFF4F46E5),
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        isDense: true,
+                        //contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                        filled: true,
+                        fillColor: Color(0xFF111827),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 20,),
+
+                    //PIN input field
+                    Text(
+                      "PIN",
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    TextField(
+                      cursorColor: Color(0xFF4F46E5),
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        isDense: true,
+                        filled: true,
+                        fillColor: Color(0xFF111827),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent),
+                        ),
+                      ),
+                    ),
 
                     SizedBox(height: 50),
+
+                    //login-button
                     RawMaterialButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
@@ -76,7 +119,9 @@ class _LoginState extends State<Login> {
                             fontSize: 15,),
                       ),
                     ),
+
                     SizedBox(height: 5,),
+
                     Text(
                         "NO ACCOUNT? REGISTER NOW",
                         style: TextStyle(color: Color(0x80FFFFFF),
@@ -90,6 +135,7 @@ class _LoginState extends State<Login> {
                           fontSize: 10
                       ),
                     ),
+
                   ],
                 ),
               ),
