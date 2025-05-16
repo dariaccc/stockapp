@@ -3,6 +3,7 @@ import 'radar.dart';
 import 'home.dart';
 import 'proversion.dart';
 import 'dashboard.dart';
+import 'login.dart';
 
 class Navigation extends StatefulWidget {
   //const Navigation({Key? key}) : super(key: key);
@@ -24,6 +25,7 @@ class _NavigationState extends State<Navigation> {
             Radar(),
             Pro(),
             Dashboard(),
+            Login() //temporary
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
