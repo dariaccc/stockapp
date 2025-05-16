@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'menu.dart';
 
-class Radar extends StatelessWidget {
-  const Radar({super.key});
+class Radar extends StatefulWidget {
+  @override
+  State<Radar> createState() => _RadarState();
+}
 
+class _RadarState extends State<Radar> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();}}
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text("Radar"), centerTitle: true),
+      ),
+    );
+  }
+}
