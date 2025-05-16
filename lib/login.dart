@@ -17,7 +17,7 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Image(image: AssetImage('assets/images/logo-test.png')),
+              const Image(width: 300, image: AssetImage('assets/images/logo-test.png')),
               SizedBox(height: 50),
               Container(
                 padding: EdgeInsets.all(20),
@@ -38,6 +38,18 @@ class _LoginState extends State<Login> {
                       ),
                       textAlign: TextAlign.center,
                     ),
+                    SizedBox(height: 10),
+                    Text(
+                      "Customer ID",
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    TextField(),
+
                     SizedBox(height: 50),
                     RawMaterialButton(
                       onPressed: () {
@@ -64,13 +76,14 @@ class _LoginState extends State<Login> {
                             fontSize: 15,),
                       ),
                     ),
+                    SizedBox(height: 5,),
                     Text(
                         "NO ACCOUNT? REGISTER NOW",
                         style: TextStyle(color: Color(0x80FFFFFF),
                         fontSize: 10
                         ),
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(height: 5,),
                     Text(
                       "Administrator Login",
                       style: TextStyle(color: Color(0x80FFFFFF),
