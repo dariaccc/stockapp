@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'menu.dart';
 
 class Radar extends StatefulWidget {
+  const Radar({super.key});
+
   @override
   State<Radar> createState() => _RadarState();
 }
@@ -32,15 +33,58 @@ class _RadarState extends State<Radar> {
 
                 SizedBox(height: 10),
 
-                Container(
-                  height: 600,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/news-placeholder.png"),
-                      fit: BoxFit.cover,
+                Stack(
+                  alignment: Alignment.bottomLeft,
+                  children: [
+                    Container(
+                      height: 500,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            "assets/images/news-placeholder.png",
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                  ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 150,
+                      color: Color(0x90111827),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      //width: MediaQuery.of(context).size.width - 20,
+                      height: 120,
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xFF111827),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                              "News title that is quite long, so that it is at least 2-3 rows",
+                              style: TextStyle(
+                                color: Color(0xFFFFFFFF),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.left,
+                          ),
+                          Text(
+                              "Some more information, lorem ipsum and more text and more text",
+                              style: TextStyle(
+                                color: Color(0x80FFFFFF),
+                                fontSize: 10,
+                              ),
+                              textAlign: TextAlign.left,
+                          ),
+                        ]
+                      ),
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: 30),

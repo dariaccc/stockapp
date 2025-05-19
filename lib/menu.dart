@@ -6,6 +6,8 @@ import 'dashboard.dart';
 import 'login.dart';
 
 class Navigation extends StatefulWidget {
+  const Navigation({super.key});
+
   //const Navigation({Key? key}) : super(key: key);
 
   @override

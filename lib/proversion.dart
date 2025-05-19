@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Pro extends StatefulWidget {
+  const Pro({super.key});
+
   @override
   State<Pro> createState() => _ProState();
 }

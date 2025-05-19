@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'menu.dart';
-import 'radar.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
   State<Home> createState() => _HomeScreenState();
 }
