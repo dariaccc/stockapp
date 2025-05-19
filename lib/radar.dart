@@ -57,7 +57,7 @@ class _RadarState extends State<Radar> {
                       margin: EdgeInsets.all(10),
                       //width: MediaQuery.of(context).size.width - 20,
                       height: 120,
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Color(0xFF111827),
@@ -74,7 +74,8 @@ class _RadarState extends State<Radar> {
                               textAlign: TextAlign.left,
                           ),
                           Text(
-                              "Some more information, lorem ipsum and more text and more text",
+                              "Some more information, lorem ipsum and more text and more text"
+                                  "that will maybe be a real news article...",
                               style: TextStyle(
                                 color: Color(0x80FFFFFF),
                                 fontSize: 10,
@@ -96,20 +97,63 @@ class _RadarState extends State<Radar> {
                     color: Color(0xFF1F2937),
                   ),
                   height: 300,
-                  width: 300,
+                  width: 350,
                   child: Column(
                     children: [
-                      Text(
-                        "Test",
-                        style: TextStyle(
-                          color: Color(0xFFFFFFFF),
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color(0xFF4F46E5),
                         ),
-                        textAlign: TextAlign.center,
+                        child: Text(
+                          "Top performers today",
+                          style: TextStyle(
+                            color: Color(0xFFFFFFFF),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 30),
+
+                      Container(
+                        width: 320,
+                        height: 55,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Color(0xFFFFFFFF)),
+                          color: Color(0xFF111827),
+                        ),
+                        //stock information
                       ),
 
-                      SizedBox(height: 30),
+                      SizedBox(height: 15),
+
+                      Container(
+                        width: 320,
+                        height: 55,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Color(0xFFFFFFFF)),
+                          color: Color(0xFF111827),
+                        ),
+                        //stock information
+                      ),
+
+                      SizedBox(height: 15),
+
+                      Container(
+                        width: 320,
+                        height: 55,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Color(0xFFFFFFFF)),
+                          color: Color(0xFF111827),
+                        ),
+                        //stock information
+                      ),
                     ],
                   ),
                 ),
@@ -123,20 +167,63 @@ class _RadarState extends State<Radar> {
                     color: Color(0xFF1F2937),
                   ),
                   height: 300,
-                  width: 300,
+                  width: 350,
                   child: Column(
                     children: [
-                      Text(
-                        "Test",
-                        style: TextStyle(
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
                           color: Color(0xFFFFFFFF),
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
                         ),
-                        textAlign: TextAlign.center,
+                        child: Text(
+                          "Worst performers today",
+                          style: TextStyle(
+                            color: Color(0xFF1F2937),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 30),
+
+                      Container(
+                        width: 320,
+                        height: 55,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Color(0xFFFFFFFF)),
+                          color: Color(0xFF111827),
+                        ),
+                        //stock information
                       ),
 
-                      SizedBox(height: 30),
+                      SizedBox(height: 15),
+
+                      Container(
+                        width: 320,
+                        height: 55,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Color(0xFFFFFFFF)),
+                          color: Color(0xFF111827),
+                        ),
+                        //stock information
+                      ),
+
+                      SizedBox(height: 15),
+
+                      Container(
+                        width: 320,
+                        height: 55,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Color(0xFFFFFFFF)),
+                          color: Color(0xFF111827),
+                        ),
+                        //stock information
+                      ),
                     ],
                   ),
                 ),
