@@ -12,11 +12,7 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: SafeArea(
-        //backgroundColor: Color(0xFF1F2937),
-        //body: SafeArea(
         child: Column(
-          //mainAxisAlignment: MainAxisAlignment.top,
-          //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               //see-through top of the menu
