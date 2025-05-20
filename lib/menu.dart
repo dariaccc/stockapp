@@ -32,8 +32,6 @@ class _MenuState extends State<Menu> {
                   children: [
                     Align(
                     alignment: Alignment.topRight,
-                    child: Container(
-                      //crossAxisAlignment: CrossAxisAlignment.end,
                       child:
                         MaterialButton(
                           onPressed: () {
@@ -41,7 +39,6 @@ class _MenuState extends State<Menu> {
                           },
                           child: Icon(Icons.close, color: Colors.white),
                         ),
-                    ),
                     ),
                     Container(
                       width: 320,
