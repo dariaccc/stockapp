@@ -1,4 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide CarouselController;
+import 'package:carousel_slider/carousel_slider.dart';
+
+
 
 class Radar extends StatefulWidget {
   const Radar({super.key});
@@ -8,6 +11,7 @@ class Radar extends StatefulWidget {
 }
 
 class _RadarState extends State<Radar> {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,72 +25,195 @@ class _RadarState extends State<Radar> {
               children: [
                 SizedBox(height: 10),
 
+                //search bar
                 Container(
-                  padding: EdgeInsets.all(5),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   width: MediaQuery.of(context).size.width - 20,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: Color(0xFFFFFFFF),
                   ),
-                  child: Text("search bar placeholder"),
+                  child: Text("search"),
                 ),
 
                 SizedBox(height: 10),
 
-                Stack(
-                  alignment: Alignment.bottomLeft,
-                  children: [
-                    Container(
-                      height: 500,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                            "assets/images/news-placeholder.png",
+                //stack for carousel
+                CarouselSlider(
+                  items: [
+                    Stack(
+                      alignment: Alignment.bottomLeft,
+                      children: [
+                        Container(
+                          height: 500,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                "assets/images/news.png",
+                              ),
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          fit: BoxFit.cover,
                         ),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 150,
-                      color: Color(0x90111827),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      //width: MediaQuery.of(context).size.width - 20,
-                      height: 120,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color(0xFF111827),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                              "News title that is quite long, so that it is at least 2-3 rows",
-                              style: TextStyle(
-                                color: Color(0xFFFFFFFF),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.left,
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 150,
+                          color: Color(0x90111827),
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          //width: MediaQuery.of(context).size.width - 20,
+                          height: 120,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xFF111827),
                           ),
-                          Text(
-                              "Some more information, lorem ipsum and more text and more text"
-                                  "that will maybe be a real news article...",
-                              style: TextStyle(
-                                color: Color(0x80FFFFFF),
-                                fontSize: 10,
-                              ),
-                              textAlign: TextAlign.left,
+                          child: Column(
+                              children: [
+                                Text(
+                                  "News title that is quite long, so that it is at least 2-3 rows",
+                                  style: TextStyle(
+                                    color: Color(0xFFFFFFFF),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                                Text(
+                                  "Some more information, lorem ipsum and more text and more text"
+                                      "that will maybe be a real news article...",
+                                  style: TextStyle(
+                                    color: Color(0x80FFFFFF),
+                                    fontSize: 10,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ]
                           ),
-                        ]
-                      ),
+                        ),
+                      ],
+                    ),
+
+                    Stack(
+                      alignment: Alignment.bottomLeft,
+                      children: [
+                        Container(
+                          height: 500,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                "assets/images/planet.png",
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 150,
+                          color: Color(0x90FFFFFF),
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          //width: MediaQuery.of(context).size.width - 20,
+                          height: 120,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xFF111827),
+                          ),
+                          child: Column(
+                              children: [
+                                Text(
+                                  "THIS is a picture of a planet",
+                                  style: TextStyle(
+                                    color: Color(0xFFFFFFFF),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                                Text(
+                                  "Some more information, lorem ipsum and more text and more text"
+                                      "that will maybe be a real news article...",
+                                  style: TextStyle(
+                                    color: Color(0x80FFFFFF),
+                                    fontSize: 10,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ]
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Stack(
+                      alignment: Alignment.bottomLeft,
+                      children: [
+                        Container(
+                          height: 500,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                "assets/images/news-placeholder.png",
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 150,
+                          color: Color(0x90111827),
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          //width: MediaQuery.of(context).size.width - 20,
+                          height: 120,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xFF111827),
+                          ),
+                          child: Column(
+                              children: [
+                                Text(
+                                  "A different news title",
+                                  style: TextStyle(
+                                    color: Color(0xFFFFFFFF),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                                Text(
+                                  "And a new text that goes on and on and on and on and on"
+                                      "and on and on and on and on...",
+                                  style: TextStyle(
+                                    color: Color(0x80FFFFFF),
+                                    fontSize: 10,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ]
+                          ),
+                        ),
+                      ],
                     ),
                   ],
+                  options: CarouselOptions(
+                    height: 500,
+                    autoPlay: true,
+                    enableInfiniteScroll: true,
+                    viewportFraction: 1.0,
+                  ),
                 ),
+
 
                 SizedBox(height: 30),
 
