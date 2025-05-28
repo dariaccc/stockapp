@@ -8,6 +8,16 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  String? selectedLanguage;
+  final TextEditingController _controller = TextEditingController();
+
+  final List languages = [
+    "German(DE)",
+    "English(UK)",
+    "French(FR)",
+    "Spanish(ES)",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +33,7 @@ class _MenuState extends State<Menu> {
             Expanded(
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                color: Color(0xFF1F2937),
+                color: Color(0xFF172033), //background colour for the whole footer
                 child: Column(
                   children: [
                     Align(
@@ -36,19 +46,19 @@ class _MenuState extends State<Menu> {
                       ),
                     ),
                     Container(
-                      width: 300,
-                      height: 40,
+                      width: 280,
+                      height: 38,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Color(0xFFFFFFFF)),
                         color: Color(0xFF111827),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
+                        padding: EdgeInsets.symmetric(vertical: 8),
                         child: DefaultTextStyle(
                           style: TextStyle(
                             color: Color(0xFFFFFFFF),
-                            fontSize: 20,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                           child: Text("Home", textAlign: TextAlign.center),
@@ -59,19 +69,19 @@ class _MenuState extends State<Menu> {
                     SizedBox(height: 15),
 
                     Container(
-                      width: 300,
-                      height: 40,
+                      width: 280,
+                      height: 38,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Color(0xFFFFFFFF)),
                         color: Color(0xFF111827),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
+                        padding: EdgeInsets.symmetric(vertical: 8),
                         child: DefaultTextStyle(
                           style: TextStyle(
                             color: Color(0xFFFFFFFF),
-                            fontSize: 20,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                           child: Text("Radar", textAlign: TextAlign.center),
@@ -83,19 +93,19 @@ class _MenuState extends State<Menu> {
                     SizedBox(height: 15),
 
                     Container(
-                      width: 300,
-                      height: 40,
+                      width: 280,
+                      height: 38,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Color(0xFFFFFFFF)),
                         color: Color(0xFF111827),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
+                        padding: EdgeInsets.symmetric(vertical: 8),
                         child: DefaultTextStyle(
                           style: TextStyle(
                             color: Color(0xFFFFFFFF),
-                            fontSize: 20,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                           child: Text(
@@ -110,19 +120,19 @@ class _MenuState extends State<Menu> {
                     SizedBox(height: 15),
 
                     Container(
-                      width: 300,
-                      height: 40,
+                      width: 280,
+                      height: 38,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Color(0xFFFFFFFF)),
                         color: Color(0xFFEF4444), //red background
                       ),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
+                        padding: EdgeInsets.symmetric(vertical: 8),
                         child: DefaultTextStyle(
                           style: TextStyle(
                             color: Color(0xFFFFFFFF),
-                            fontSize: 20,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                           child: Text("Log Out", textAlign: TextAlign.center),
@@ -134,19 +144,19 @@ class _MenuState extends State<Menu> {
                     SizedBox(height: 15),
 
                     Container(
-                      width: 300,
-                      height: 40,
+                      width: 280,
+                      height: 38,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Color(0xFFFFFFFF)),
                         color: Color(0xFFFBBD23), //yellow background
                       ),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
+                        padding: EdgeInsets.symmetric(vertical: 8),
                         child: DefaultTextStyle(
                           style: TextStyle(
                             color: Color(0xFFFFFFFF),
-                            fontSize: 20,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                           child: Text("Dashboard", textAlign: TextAlign.center),
@@ -157,65 +167,51 @@ class _MenuState extends State<Menu> {
 
                     SizedBox(height: 20),
 
-                    Container(
-                      width: 280,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Color(0xFF111827),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 60),
-                          child: DropdownButton(
-                            value: _chosenModel,
-                            items: [
-                              'Tesla Model S',
-                              'Hyundai Sonata',
-                              'Jeep Wrangler',
-                              'Honda Accord',
-                              'Mercedes S-Class'
-                            ].map((String value) {
-                              return DropdownMenuItem(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (String newValue) {
+                   Material(
+                     color: Colors.transparent,
+                     child: Container(
+                          width: 280,
+                          height: 45,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Color(0xFF1F2937), //background grey-blue
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30),
+                          child: DropdownButton<String>(
+                            value: selectedLanguage,
+                            hint: Text(
+                              "Language",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            dropdownColor: Color(0xFF1F2937), // menu bg
+                            items:
+                                languages.map((language) {
+                                  final isSelected =
+                                      language == selectedLanguage;
+                                  return DropdownMenuItem<String>(
+                                    value: language,
+                                      child: Text(
+                                        language,
+                                        style: TextStyle(color: Colors.white,
+                                        fontSize: 16),
+                                      ),
+                                  );
+                                }).toList(),
+                            onChanged: (value) {
                               setState(() {
-                                _chosenModel = newValue;
+                                selectedLanguage = value;
                               });
                             },
-                            hint: Text(
-                              "Choose a Car Model",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          )
-                        /*child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            DefaultTextStyle(
-                              style: TextStyle(
-                                color: Color(0xFFFFFFFF),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              child: Text(
-                                "Language",
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Icon(Icons.keyboard_arrow_down, color: Colors.white),
-                          ],
-                        ),*/
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        ),
+                      ),
                       ),
 
-                      //dropdown lang
-                    ),
-
+                    //dropdown lang
                     SizedBox(height: 15),
 
                     Container(
