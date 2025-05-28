@@ -46,14 +46,14 @@ class _MenuState extends State<Menu> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 5),
                         child: DefaultTextStyle(
-                        style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                        child: Text(
-                          "Home",
-                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFFFFFFFF),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          child: Text("Home", textAlign: TextAlign.center),
                         ),
-                      ),
-                      ),//home
+                      ), //home
                     ),
 
                     SizedBox(height: 15),
@@ -69,12 +69,12 @@ class _MenuState extends State<Menu> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 5),
                         child: DefaultTextStyle(
-                          style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                          child: Text(
-                            "Radar",
-                            textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFFFFFFFF),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
+                          child: Text("Radar", textAlign: TextAlign.center),
                         ),
                       ),
                       //radar
@@ -93,8 +93,11 @@ class _MenuState extends State<Menu> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 5),
                         child: DefaultTextStyle(
-                          style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Color(0xFFFFFFFF),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                           child: Text(
                             "Purchase PRO",
                             textAlign: TextAlign.center,
@@ -117,12 +120,12 @@ class _MenuState extends State<Menu> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 5),
                         child: DefaultTextStyle(
-                          style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                          child: Text(
-                            "Log Out",
-                            textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFFFFFFFF),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
+                          child: Text("Log Out", textAlign: TextAlign.center),
                         ),
                       ),
                       //logout
@@ -141,12 +144,12 @@ class _MenuState extends State<Menu> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 5),
                         child: DefaultTextStyle(
-                          style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                          child: Text(
-                            "Dashboard",
-                            textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFFFFFFFF),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
+                          child: Text("Dashboard", textAlign: TextAlign.center),
                         ),
                       ),
                       //dashboard
@@ -161,6 +164,54 @@ class _MenuState extends State<Menu> {
                         borderRadius: BorderRadius.circular(30),
                         color: Color(0xFF111827),
                       ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 60),
+                          child: DropdownButton(
+                            value: _chosenModel,
+                            items: [
+                              'Tesla Model S',
+                              'Hyundai Sonata',
+                              'Jeep Wrangler',
+                              'Honda Accord',
+                              'Mercedes S-Class'
+                            ].map((String value) {
+                              return DropdownMenuItem(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                _chosenModel = newValue;
+                              });
+                            },
+                            hint: Text(
+                              "Choose a Car Model",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          )
+                        /*child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            DefaultTextStyle(
+                              style: TextStyle(
+                                color: Color(0xFFFFFFFF),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              child: Text(
+                                "Language",
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Icon(Icons.keyboard_arrow_down, color: Colors.white),
+                          ],
+                        ),*/
+                      ),
 
                       //dropdown lang
                     ),
@@ -174,7 +225,26 @@ class _MenuState extends State<Menu> {
                         borderRadius: BorderRadius.circular(30),
                         color: Color(0xFF4F46E5),
                       ),
-                      //dropdown lang
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 60),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(Icons.pin_drop, color: Colors.white),
+                            DefaultTextStyle(
+                              style: TextStyle(
+                                color: Color(0xFFFFFFFF),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              child: Text(
+                                "Germany",
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
 
                     SizedBox(height: 10),
