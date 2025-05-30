@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'theme.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -284,6 +285,12 @@ class _MenuState extends State<Menu> {
                               borderRadius: BorderRadius.circular(30),
                               color: Color(0xFFFFFFFF),
                             ),
+                            child: SegmentedButton<ThemeMode>(
+                              segments: [
+                              ButtonSegment(value: ThemeMode.light, label: Text("L")),
+                              ButtonSegment(value: ThemeMode.dark, label: Text("D")),
+                            ], selected: {},
+                            onSelectionChanged: (p0) {},)
                           ),
                         ],
                       ),

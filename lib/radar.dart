@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart' hide CarouselController;
 import 'package:carousel_slider/carousel_slider.dart';
 
-
-
 class Radar extends StatefulWidget {
   const Radar({super.key});
 
@@ -11,12 +9,13 @@ class Radar extends StatefulWidget {
 }
 
 class _RadarState extends State<Radar> {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //theme: light,
+      //darkTheme: dark,
       home: Scaffold(
-        backgroundColor: Color(0xFF111827),
+        backgroundColor: Theme.of(context).colorScheme.scaffoldBackgroundColor,
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -59,7 +58,7 @@ class _RadarState extends State<Radar> {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: 150,
-                          color: Color(0x90111827),
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                         Container(
                           margin: EdgeInsets.all(10),
@@ -68,7 +67,7 @@ class _RadarState extends State<Radar> {
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xFF111827),
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                           child: Column(
                               children: [
@@ -123,7 +122,7 @@ class _RadarState extends State<Radar> {
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xFF111827),
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                           child: Column(
                               children: [
@@ -169,7 +168,7 @@ class _RadarState extends State<Radar> {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: 150,
-                          color: Color(0x90111827),
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                         Container(
                           margin: EdgeInsets.all(10),
@@ -178,7 +177,7 @@ class _RadarState extends State<Radar> {
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xFF111827),
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                           child: Column(
                               children: [
@@ -221,7 +220,7 @@ class _RadarState extends State<Radar> {
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: Color(0xFF1F2937),
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                   height: 300,
                   width: 350,
@@ -231,7 +230,7 @@ class _RadarState extends State<Radar> {
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Color(0xFF4F46E5),
+                          color: Theme.of(context).colorScheme.onSecondary,
                         ),
                         child: Text(
                           "Top performers today",
@@ -251,7 +250,7 @@ class _RadarState extends State<Radar> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Color(0xFFFFFFFF)),
-                          color: Color(0xFF111827),
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                         //stock information
                       ),
@@ -264,7 +263,7 @@ class _RadarState extends State<Radar> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Color(0xFFFFFFFF)),
-                          color: Color(0xFF111827),
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                         //stock information
                       ),
@@ -277,7 +276,7 @@ class _RadarState extends State<Radar> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Color(0xFFFFFFFF)),
-                          color: Color(0xFF111827),
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                         //stock information
                       ),
@@ -291,7 +290,7 @@ class _RadarState extends State<Radar> {
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: Color(0xFF1F2937),
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                   height: 300,
                   width: 350,
@@ -306,7 +305,7 @@ class _RadarState extends State<Radar> {
                         child: Text(
                           "Worst performers today",
                           style: TextStyle(
-                            color: Color(0xFF1F2937),
+                            color: Theme.of(context).colorScheme.secondary,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -321,7 +320,7 @@ class _RadarState extends State<Radar> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Color(0xFFFFFFFF)),
-                          color: Color(0xFF111827),
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                         //stock information
                       ),
@@ -334,7 +333,7 @@ class _RadarState extends State<Radar> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Color(0xFFFFFFFF)),
-                          color: Color(0xFF111827),
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                         //stock information
                       ),
@@ -347,7 +346,7 @@ class _RadarState extends State<Radar> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Color(0xFFFFFFFF)),
-                          color: Color(0xFF111827),
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                         //stock information
                       ),
@@ -362,4 +361,8 @@ class _RadarState extends State<Radar> {
       ),
     );
   }
+}
+
+extension on ColorScheme {
+  get scaffoldBackgroundColor => null;
 }
