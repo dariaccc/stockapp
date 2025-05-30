@@ -12,8 +12,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: Color(0xFF111827),
         body: Center(
           child: Column(
@@ -155,7 +154,6 @@ class _LoginState extends State<Login> {
           ),
         ),
 
-      ),
     );
   }
 }

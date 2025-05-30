@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
 import 'theme.dart';
 
 class Menu extends StatefulWidget {
@@ -21,8 +22,10 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SafeArea(
+    final ThemeData theme = Theme.of(context);
+    final ColorScheme colorScheme = theme.colorScheme;
+
+    return SafeArea(
         child: Column(
           children: [
             Container(
@@ -34,7 +37,9 @@ class _MenuState extends State<Menu> {
             Expanded(
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                color: Color(0xFF172033), //background colour for the whole footer
+                color: Color(
+                  0xFF172033,
+                ), //background colour for the whole footer
                 child: Column(
                   children: [
                     Align(
@@ -168,49 +173,51 @@ class _MenuState extends State<Menu> {
 
                     SizedBox(height: 20),
 
-                   Material(
-                     color: Colors.transparent,
-                     child: Container(
-                          width: 280,
-                          height: 45,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Color(0xFF1F2937), //background grey-blue
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 30),
-                          child: DropdownButton<String>(
-                            value: selectedLanguage,
-                            hint: Text(
-                              "Language",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            dropdownColor: Color(0xFF1F2937), // menu bg
-                            items:
-                                languages.map((language) {
-                                  final isSelected =
-                                      language == selectedLanguage;
-                                  return DropdownMenuItem<String>(
-                                    value: language,
+                    Material(
+                      color: Colors.transparent,
+                      child: Container(
+                        width: 280,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Color(0xFF1F2937), //background grey-blue
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 30),
+                            child: DropdownButton<String>(
+                              value: selectedLanguage,
+                              hint: Text(
+                                "Language",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              dropdownColor: Color(0xFF1F2937), // menu bg
+                              items:
+                                  languages.map((language) {
+                                    final isSelected =
+                                        language == selectedLanguage;
+                                    return DropdownMenuItem<String>(
+                                      value: language,
                                       child: Text(
                                         language,
-                                        style: TextStyle(color: Colors.white,
-                                        fontSize: 16),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
                                       ),
-                                  );
-                                }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                selectedLanguage = value;
-                              });
-                            },
-                            style: TextStyle(color: Colors.white),
+                                    );
+                                  }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedLanguage = value;
+                                });
+                              },
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
-                        ),
                       ),
-                      ),
+                    ),
 
                     //dropdown lang
                     SizedBox(height: 15),
@@ -279,18 +286,30 @@ class _MenuState extends State<Menu> {
                             image: AssetImage('assets/images/logo-test.png'),
                           ),
                           Container(
-                            width: 70,
+                            width: 200,
                             height: 30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
                               color: Color(0xFFFFFFFF),
                             ),
-                            child: SegmentedButton<ThemeMode>(
-                              segments: [
-                              ButtonSegment(value: ThemeMode.light, label: Text("L")),
-                              ButtonSegment(value: ThemeMode.dark, label: Text("D")),
-                            ], selected: {},
-                            onSelectionChanged: (p0) {},)
+                            child: Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed:
+                                      () => MyApp.of(
+                                        context,
+                                      ).changeTheme(ThemeMode.light),
+                                  child: Text('Light'),
+                                ),
+                                ElevatedButton(
+                                  onPressed:
+                                      () => MyApp.of(
+                                        context,
+                                      ).changeTheme(ThemeMode.dark),
+                                  child: Text('Dark'),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -301,8 +320,7 @@ class _MenuState extends State<Menu> {
             ),
           ],
         ),
-      ),
-      //),
     );
+
   }
 }
