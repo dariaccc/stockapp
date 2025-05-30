@@ -16,8 +16,7 @@ class _NavigationState extends State<Navigation> {
   int screen_index = 0;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         body: IndexedStack(
           index: screen_index,
           children: [
@@ -62,7 +61,6 @@ class _NavigationState extends State<Navigation> {
             BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Menu'),
           ],
         ),
-      ),
     );
   }
 }

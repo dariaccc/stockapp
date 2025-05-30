@@ -12,9 +12,12 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Color(0xFF111827),
+
+    final ThemeData theme = Theme.of(context);
+    final ColorScheme colorScheme = theme.colorScheme;
+
+    return Scaffold(
+        backgroundColor: colorScheme.primary,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -26,7 +29,7 @@ class _LoginState extends State<Login> {
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  color: Color(0xFF1F2937),
+                  color: colorScheme.secondary,
                 ),
                 height: 400,
                 width: 300,
@@ -36,7 +39,7 @@ class _LoginState extends State<Login> {
                     Text(
                       "LOGIN",
                       style: TextStyle(
-                        color: Color(0xFFFFFFFF),
+                        color: colorScheme.onPrimary,
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
@@ -49,7 +52,7 @@ class _LoginState extends State<Login> {
                     Text(
                       "Customer ID",
                       style: TextStyle(
-                        color: Color(0xFFFFFFFF),
+                        color: colorScheme.onPrimary,
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
@@ -58,12 +61,12 @@ class _LoginState extends State<Login> {
                     SizedBox(height: 10),
                     TextField(
                       cursorColor: Color(0xFF4F46E5),
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: colorScheme.onPrimary),
                       decoration: InputDecoration(
                         isDense: true,
                         //contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                         filled: true,
-                        fillColor: Color(0xFF111827),
+                        fillColor: colorScheme.primary,
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
                         ),
@@ -76,7 +79,7 @@ class _LoginState extends State<Login> {
                     Text(
                       "PIN",
                       style: TextStyle(
-                        color: Color(0xFFFFFFFF),
+                        color: colorScheme.onPrimary,
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
@@ -87,7 +90,7 @@ class _LoginState extends State<Login> {
                       appContext: context,
                       length: 6,
                       cursorColor: Color(0xFF4F46E5),
-                      textStyle: TextStyle(color: Colors.white),
+                      textStyle: TextStyle(color: colorScheme.onPrimary),
                       enableActiveFill: true,
                       pinTheme: PinTheme(
                         shape: PinCodeFieldShape.box,
@@ -95,11 +98,11 @@ class _LoginState extends State<Login> {
                         fieldHeight: 50,
                         fieldWidth: 40,
                         activeColor: Color(0xFF4F46E5),
-                        inactiveColor: Color(0xFF111827),
+                        inactiveColor: colorScheme.primary,
                         selectedColor: Colors.white,
-                        activeFillColor: Color(0xFF111827),     // filled when typing
-                        inactiveFillColor: Color(0xFF111827), // initial state
-                        selectedFillColor: Color(0xFF111827),
+                        activeFillColor: colorScheme.primary,    // filled when typing
+                        inactiveFillColor: colorScheme.primary, // initial state
+                        selectedFillColor: colorScheme.primary,
                       ),
                     ),
 
@@ -112,11 +115,11 @@ class _LoginState extends State<Login> {
                           MaterialPageRoute(builder: (context) => Navigation()),
                         );
                       },
-                      fillColor: Color(0xFF111827),
+                      fillColor: colorScheme.tertiary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                         side: BorderSide(
-                          color: Colors.white,
+                          color: colorScheme.onPrimary,
                           width: 2,
                         ),
                       ),
@@ -127,7 +130,7 @@ class _LoginState extends State<Login> {
                       child: Text(
                           "Login",
                           style: TextStyle(
-                            color: Color(0xFFFFFFFF),
+                            color: colorScheme.onPrimary,
                             fontSize: 15,),
                       ),
                     ),
@@ -155,7 +158,6 @@ class _LoginState extends State<Login> {
           ),
         ),
 
-      ),
     );
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart' hide CarouselController;
 import 'package:carousel_slider/carousel_slider.dart';
 
-
-
 class Radar extends StatefulWidget {
   const Radar({super.key});
 
@@ -11,12 +9,14 @@ class Radar extends StatefulWidget {
 }
 
 class _RadarState extends State<Radar> {
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Color(0xFF111827),
+
+    final ThemeData theme = Theme.of(context);
+    final ColorScheme colorScheme = theme.colorScheme;
+
+    return Scaffold(
+        backgroundColor: theme.scaffoldBackgroundColor,
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -31,9 +31,13 @@ class _RadarState extends State<Radar> {
                   width: MediaQuery.of(context).size.width - 20,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: Color(0xFFFFFFFF),
+                    color: colorScheme.onSecondary,
                   ),
-                  child: Text("search"),
+                  child: Text("search",
+                    style: TextStyle(
+                      color: colorScheme.onPrimary,
+                    ),
+                ),
                 ),
 
                 SizedBox(height: 10),
@@ -59,7 +63,7 @@ class _RadarState extends State<Radar> {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: 150,
-                          color: Color(0x90111827),
+                          color: colorScheme.primary.withValues(alpha: 0.7),
                         ),
                         Container(
                           margin: EdgeInsets.all(10),
@@ -68,14 +72,14 @@ class _RadarState extends State<Radar> {
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xFF111827),
+                            color: colorScheme.tertiary,
                           ),
                           child: Column(
                               children: [
                                 Text(
                                   "News title that is quite long, so that it is at least 2-3 rows",
                                   style: TextStyle(
-                                    color: Color(0xFFFFFFFF),
+                                    color: colorScheme.onPrimary,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -85,7 +89,7 @@ class _RadarState extends State<Radar> {
                                   "Some more information, lorem ipsum and more text and more text"
                                       "that will maybe be a real news article...",
                                   style: TextStyle(
-                                    color: Color(0x80FFFFFF),
+                                    color: colorScheme.onPrimary.withValues(alpha: 0.8),
                                     fontSize: 10,
                                   ),
                                   textAlign: TextAlign.left,
@@ -114,7 +118,7 @@ class _RadarState extends State<Radar> {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: 150,
-                          color: Color(0x90FFFFFF),
+                          color: colorScheme.primary.withValues(alpha: 0.7),
                         ),
                         Container(
                           margin: EdgeInsets.all(10),
@@ -123,14 +127,14 @@ class _RadarState extends State<Radar> {
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xFF111827),
+                            color: colorScheme.tertiary,
                           ),
                           child: Column(
                               children: [
                                 Text(
                                   "THIS is a picture of a planet",
                                   style: TextStyle(
-                                    color: Color(0xFFFFFFFF),
+                                    color: colorScheme.onPrimary,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -140,7 +144,7 @@ class _RadarState extends State<Radar> {
                                   "Some more information, lorem ipsum and more text and more text"
                                       "that will maybe be a real news article...",
                                   style: TextStyle(
-                                    color: Color(0x80FFFFFF),
+                                    color: colorScheme.onPrimary.withValues(alpha: 0.8),
                                     fontSize: 10,
                                   ),
                                   textAlign: TextAlign.left,
@@ -169,7 +173,7 @@ class _RadarState extends State<Radar> {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: 150,
-                          color: Color(0x90111827),
+                          color: colorScheme.primary.withValues(alpha: 0.7),
                         ),
                         Container(
                           margin: EdgeInsets.all(10),
@@ -178,14 +182,14 @@ class _RadarState extends State<Radar> {
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xFF111827),
+                            color: colorScheme.tertiary,
                           ),
                           child: Column(
                               children: [
                                 Text(
                                   "A different news title",
                                   style: TextStyle(
-                                    color: Color(0xFFFFFFFF),
+                                    color: colorScheme.onPrimary,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -195,7 +199,7 @@ class _RadarState extends State<Radar> {
                                   "And a new text that goes on and on and on and on and on"
                                       "and on and on and on and on...",
                                   style: TextStyle(
-                                    color: Color(0x80FFFFFF),
+                                    color: colorScheme.onPrimary.withValues(alpha: 0.8),
                                     fontSize: 10,
                                   ),
                                   textAlign: TextAlign.left,
@@ -221,7 +225,8 @@ class _RadarState extends State<Radar> {
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: Color(0xFF1F2937),
+                    border: Border.all(color: Color(0xFF000000)),
+                    color: colorScheme.secondary,
                   ),
                   height: 300,
                   width: 350,
@@ -231,12 +236,12 @@ class _RadarState extends State<Radar> {
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Color(0xFF4F46E5),
+                          color: colorScheme.onSecondary,
                         ),
                         child: Text(
                           "Top performers today",
                           style: TextStyle(
-                            color: Color(0xFFFFFFFF),
+                            color: colorScheme.onPrimary,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -250,8 +255,8 @@ class _RadarState extends State<Radar> {
                         height: 55,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Color(0xFFFFFFFF)),
-                          color: Color(0xFF111827),
+                          border: Border.all(color: colorScheme.onPrimary),
+                          color: colorScheme.tertiary,
                         ),
                         //stock information
                       ),
@@ -263,8 +268,8 @@ class _RadarState extends State<Radar> {
                         height: 55,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Color(0xFFFFFFFF)),
-                          color: Color(0xFF111827),
+                          border: Border.all(color: colorScheme.onPrimary),
+                          color: colorScheme.tertiary,
                         ),
                         //stock information
                       ),
@@ -276,8 +281,8 @@ class _RadarState extends State<Radar> {
                         height: 55,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Color(0xFFFFFFFF)),
-                          color: Color(0xFF111827),
+                          border: Border.all(color: colorScheme.onPrimary),
+                          color: colorScheme.tertiary,
                         ),
                         //stock information
                       ),
@@ -291,7 +296,8 @@ class _RadarState extends State<Radar> {
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: Color(0xFF1F2937),
+                    border: Border.all(color: Color(0xFF000000)),
+                    color: colorScheme.secondary,
                   ),
                   height: 300,
                   width: 350,
@@ -306,7 +312,7 @@ class _RadarState extends State<Radar> {
                         child: Text(
                           "Worst performers today",
                           style: TextStyle(
-                            color: Color(0xFF1F2937),
+                            color: Color(0xFF111827),
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -320,8 +326,8 @@ class _RadarState extends State<Radar> {
                         height: 55,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Color(0xFFFFFFFF)),
-                          color: Color(0xFF111827),
+                          border: Border.all(color: colorScheme.onPrimary),
+                          color: colorScheme.tertiary,
                         ),
                         //stock information
                       ),
@@ -333,8 +339,8 @@ class _RadarState extends State<Radar> {
                         height: 55,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Color(0xFFFFFFFF)),
-                          color: Color(0xFF111827),
+                          border: Border.all(color: colorScheme.onPrimary),
+                          color: colorScheme.tertiary,
                         ),
                         //stock information
                       ),
@@ -346,8 +352,8 @@ class _RadarState extends State<Radar> {
                         height: 55,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Color(0xFFFFFFFF)),
-                          color: Color(0xFF111827),
+                          border: Border.all(color: colorScheme.onPrimary),
+                          color: colorScheme.tertiary,
                         ),
                         //stock information
                       ),
@@ -359,7 +365,6 @@ class _RadarState extends State<Radar> {
             ),
           ),
         ),
-      ),
     );
   }
 }
