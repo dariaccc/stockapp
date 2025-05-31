@@ -57,29 +57,29 @@ class ApiService {
 
       // For Marketstack free plan, we'll use the existing historical data method
       // and adapt it for different periods
-      int limit;
+      int dataLimit;
       switch (period) {
         case '1H':
-          limit = 1; // Very limited for free plan
+          dataLimit = 1; // Very limited for free plan
           break;
         case '1D':
-          limit = 2; // Current + previous day
+          dataLimit = 2; // Current + previous day
           break;
         case '1W':
-          limit = 7;
+          dataLimit = 7;
           break;
         case '1M':
-          limit = 30;
+          dataLimit = 30;
           break;
         case '1Y':
-          limit = 100; // Max reasonable for free plan
+          dataLimit = 100; // Max reasonable for free plan
           break;
         default:
-          limit = 30;
+          dataLimit = 30;
       }
 
       // Use the basic historical data method
-      final historicalData = await getHistoricalDataBasic(symbol, limit: limit);
+      final historicalData = await getHistoricalDataBasic(symbol, limit: dataLimit);
 
       if (historicalData.isNotEmpty) {
         // Convert to chart format
