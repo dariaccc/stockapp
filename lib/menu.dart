@@ -255,6 +255,7 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
+    bool isLight = Theme.of(context).brightness == Brightness.light;
 
     return SafeArea(
       child: Column(
@@ -539,33 +540,40 @@ class _MenuState extends State<Menu> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Image(
-                          height: 35,
+                          height: 30,
                           image: AssetImage('assets/images/logo-test.png'),
                         ),
-                        Row(
+                        ToggleButtons(
+                          isSelected: [isLight, !isLight],
+                          onPressed: (index) {
+                            if (index == 0) {
+                              MyApp.of(context).changeTheme(ThemeMode.light);
+                            } else {
+                              MyApp.of(context).changeTheme(ThemeMode.dark);
+                            }
+                          },
+                          borderRadius: BorderRadius.circular(12),
+                          //selectedColor: colorScheme.onSecondary,
+                          fillColor: colorScheme.secondary,
+                          //color: colorScheme.tertiary,
                           children: [
-                            ElevatedButton(
-                              onPressed: () => MyApp.of(context).changeTheme(ThemeMode.light),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: colorScheme.onPrimary,
-                              ),
-                              child: Text(
-                                "Light",
-                                style: TextStyle(color: colorScheme.onTertiary),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              child: Text('Light',
+                                style: TextStyle(
+                                    color: colorScheme.onSecondary),
                               ),
                             ),
-                            ElevatedButton(
-                              onPressed: () => MyApp.of(context).changeTheme(ThemeMode.dark),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: colorScheme.onPrimary,
-                              ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8),
                               child: Text(
-                                'Dark',
-                                style: TextStyle(color: colorScheme.tertiary),
+                                  "Dark",
+                                  style: TextStyle(
+                                  color: colorScheme.onPrimary),
                               ),
                             ),
                           ],
-                        ),
+                        )
                       ],
                     ),
                   ),

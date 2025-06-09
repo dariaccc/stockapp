@@ -13,6 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   pin_code_fields: ^8.0.0 # to create the PIN-input field
   carousel_slider: ^5.0.0 # for the news carousel
+  google_fonts: ^6.1.0 #custom fonts
 
   # New dependencies for API and storage
   http: ^1.1.0                    # For API calls to Marketstack

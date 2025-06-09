@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 
 ThemeData light = ThemeData(
     colorScheme: ColorScheme.fromSeed(
@@ -12,7 +12,14 @@ ThemeData light = ThemeData(
       brightness: Brightness.light,
     ),
     scaffoldBackgroundColor: Color(0xFFFFFFFF), // background
-    brightness: Brightness.light, // must match ColorScheme
+    brightness: Brightness.light,
+    textTheme: TextTheme(
+      displayLarge: GoogleFonts.spaceGrotesk(fontSize: 40, fontWeight: FontWeight.bold), // Titles
+      titleMedium: GoogleFonts.manrope(fontSize: 20),  // Subheadings
+      labelLarge: GoogleFonts.sora(fontSize: 16),      // Buttons
+      headlineSmall: GoogleFonts.dmSans(fontSize: 18), // Categories
+      bodyMedium: GoogleFonts.inter(fontSize: 16),     // Body
+    ),// must match ColorScheme
 );
 
 ThemeData dark = ThemeData(
@@ -28,4 +35,11 @@ ThemeData dark = ThemeData(
   ),
   scaffoldBackgroundColor: Color(0xFF111827),
   brightness: Brightness.dark,
+  textTheme: TextTheme(
+    displayLarge: GoogleFonts.spaceGrotesk(fontSize: 40, fontWeight: FontWeight.bold), // Titles
+    titleMedium: GoogleFonts.manrope(fontSize: 20),  // Subheadings
+    labelLarge: GoogleFonts.sora(fontSize: 16),      // Buttons
+    headlineSmall: GoogleFonts.dmSans(fontSize: 18), // Categories
+    bodyMedium: GoogleFonts.inter(fontSize: 16),     // Body
+  ),
 );
