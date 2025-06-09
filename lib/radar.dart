@@ -502,7 +502,7 @@ class _RadarState extends State<Radar> {
 
               // News Carousel with loading state
               isLoading
-                  ? Container(
+                  ? SizedBox(
                 height: 500,
                 child: const Center(
                   child: CircularProgressIndicator(),

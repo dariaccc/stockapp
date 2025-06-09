@@ -163,7 +163,7 @@ class _ProState extends State<Pro> {
                           ),
                         ],
                       ),
-                    )).toList(),
+                    )),
 
                     const SizedBox(height: 25),
 

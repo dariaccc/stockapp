@@ -178,8 +178,8 @@ class _StockPageState extends State<StockPage> {
       });
 
       print('🔄 Updated price info for $selectedPeriod:');
-      print('   Price: \$${currentPrice}');
-      print('   Change: ${currentChange} (${currentChangePercent})');
+      print('   Price: \$$currentPrice');
+      print('   Change: $currentChange ($currentChangePercent)');
     }
   }
 
@@ -257,9 +257,9 @@ class _StockPageState extends State<StockPage> {
 
     // Get the current price from the dynamic price display, not the original stock data
     double basePrice;
-    if (this.currentPrice != '150.25') {
+    if (currentPrice != '150.25') {
       // Use the current dynamic price if it's been updated (this.currentPrice refers to the class variable)
-      basePrice = double.tryParse(this.currentPrice) ?? 150.0;
+      basePrice = double.tryParse(currentPrice) ?? 150.0;
     } else if (stockData != null) {
       // Fallback to stock data price
       basePrice = double.tryParse(stockData!['price']) ?? 150.0;
@@ -464,7 +464,7 @@ class _StockPageState extends State<StockPage> {
     final ColorScheme colorScheme = theme.colorScheme;
 
     if (isChartLoading) {
-      return Container(
+      return SizedBox(
         height: 250, // Increased height for better visibility
         child: Center(
           child: Column(
@@ -486,7 +486,7 @@ class _StockPageState extends State<StockPage> {
     }
 
     if (chartData.isEmpty) {
-      return Container(
+      return SizedBox(
         height: 250,
         child: Center(
           child: Column(

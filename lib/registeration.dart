@@ -373,10 +373,10 @@ class _RegistrationState extends State<Registration> {
     }
 
     String formatted = '';
-    if (digitsOnly.length >= 1) {
+    if (digitsOnly.isNotEmpty) {
       formatted = digitsOnly.substring(0, digitsOnly.length > 2 ? 2 : digitsOnly.length);
       if (digitsOnly.length > 2) {
-        formatted += '/' + digitsOnly.substring(2);
+        formatted += '/${digitsOnly.substring(2)}';
       }
     }
 

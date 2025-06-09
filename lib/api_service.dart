@@ -632,8 +632,8 @@ class UserDataService {
   // In a real app, you'd use a database or secure storage
   // For demo purposes, we'll use a simple in-memory storage
 
-  static List<Map<String, dynamic>> _transactions = [];
-  static Map<String, double> _portfolio = {}; // symbol -> quantity
+  static final List<Map<String, dynamic>> _transactions = [];
+  static final Map<String, double> _portfolio = {}; // symbol -> quantity
   static double _cashBalance = 10000.0; // Starting balance
 
   // Add a transaction (buy/sell)
