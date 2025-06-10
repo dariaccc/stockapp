@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide CarouselController;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'stockpage.dart';
 import 'news_service.dart'; // Import your NewsService
+import 'all_stocks.dart';
 
 class Radar extends StatefulWidget {
   final String locationCode;
@@ -60,7 +61,7 @@ class _RadarState extends State<Radar> {
         // Try to get financial news directly
         final directNews = await NewsService.getFinancialNews(
           category: 'business',
-          country: widget.locationCode.toLowerCase() == 'de' ? 'de' : 'us',
+          country: _getLocationDisplayName(widget.locationCode),
           pageSize: 5,
         );
         print('🔍 Direct news call result: ${directNews.length} articles');
@@ -482,23 +483,59 @@ class _RadarState extends State<Radar> {
 
               const SizedBox(height: 15),
 
-              // Search bar
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                width: MediaQuery.of(context).size.width - 20,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: colorScheme.onSecondary,
-                ),
-                child: Text(
-                  "search",
-                  style: TextStyle(
-                    color: colorScheme.onPrimary,
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AllStocksPage(
+                          locationCode: widget.locationCode,
+                          locationName: _getLocationDisplayName(widget.locationCode),
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: colorScheme.onSecondary,
+                    foregroundColor: colorScheme.secondary,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 2,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.list_alt,
+                        size: 20,
+                        color: colorScheme.secondary,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'View All Stocks',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: colorScheme.secondary,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Icon(
+                        Icons.arrow_forward,
+                        size: 16,
+                        color: colorScheme.secondary,
+                      ),
+                    ],
                   ),
                 ),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
 
               // News Carousel with loading state
               isLoading

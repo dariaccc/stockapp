@@ -37,25 +37,32 @@ class _HomeScreenState extends State<Home> {
     });
 
     try {
-      // Get location-based data first
-      final locationData = await ApiService.getLocationBasedData();
+      print('🏠 Loading home data for ${widget.locationCode}...');
 
       // Get different stock based on location
       String primaryStock = _getPrimaryStockForLocation(widget.locationCode);
+      print('📊 Primary stock for ${widget.locationCode}: $primaryStock');
+
+      // Try to get real stock data first
       final stockQuote = await ApiService.getStockQuote(primaryStock);
 
       if (stockQuote != null) {
-        final isPositive = stockQuote['change'] >= 0;
+        print('✅ Successfully loaded real data for $primaryStock');
+        final isPositive = (stockQuote['change'] ?? 0) >= 0;
+        final price = stockQuote['price'] ?? 0.0;
+        final changePercent = stockQuote['changePercent'] ?? '0.00';
+
         setState(() {
           lastViewedStock = {
             'symbol': stockQuote['symbol'],
             'name': _getStockName(stockQuote['symbol']),
-            'price': '\$${stockQuote['price'].toStringAsFixed(2)}',
-            'change': '${isPositive ? '+' : ''}${stockQuote['changePercent']}%',
+            'price': _formatPrice(price, widget.locationCode),
+            'change': '${isPositive ? '+' : ''}$changePercent%',
             'changeColor': isPositive ? Colors.green : Colors.red,
           };
         });
       } else {
+        print('⚠️ Real API failed, using fallback for $primaryStock');
         // Fallback data based on location
         final fallbackData = _getFallbackDataForLocation(widget.locationCode);
         setState(() {
@@ -63,19 +70,29 @@ class _HomeScreenState extends State<Home> {
         });
       }
 
-      // Get recommended stocks based on location
+      // Get recommended stocks based on location and try to fetch some real data
       List<String> recommendedStocks = _getRecommendedStocksForLocation(widget.locationCode);
+      print('📋 Recommended stocks: ${recommendedStocks.take(5).toList()}');
 
-      // Get multiple stock data to calculate sector performance
-      final stocksData = await ApiService.getMultipleStocks(recommendedStocks.take(10).toList());
+      // Try to get real data for a few stocks to calculate sector performance
+      List<Map<String, dynamic>> stocksData = [];
+      try {
+        final limitedStocks = recommendedStocks.take(5).toList(); // Limit to avoid too many API calls
+        stocksData = await ApiService.getMultipleStocks(limitedStocks);
+        print('📈 Retrieved ${stocksData.length} real stocks for sector calculation');
+      } catch (e) {
+        print('⚠️ Failed to get multiple stocks: $e');
+      }
 
       // Calculate sector data based on location and actual stock performance
       setState(() {
         topSectors = _getSectorsForLocation(widget.locationCode, stocksData);
         isLoading = false;
       });
+
+      print('✅ Home data loaded successfully');
     } catch (e) {
-      print('Error loading stock data: $e');
+      print('❌ Error loading stock data: $e');
       // Set fallback data based on location
       setState(() {
         lastViewedStock = _getFallbackDataForLocation(widget.locationCode);
@@ -85,13 +102,29 @@ class _HomeScreenState extends State<Home> {
     }
   }
 
+  String _formatPrice(double price, String locationCode) {
+    switch (locationCode) {
+      case 'DE':
+        return '€${price.toStringAsFixed(2)}';
+      case 'GB':
+        return '£${price.toStringAsFixed(2)}';
+      case 'JP':
+        return '¥${price.toStringAsFixed(0)}';
+      case 'CA':
+        return 'C\$${price.toStringAsFixed(2)}';
+      case 'US':
+      default:
+        return '\$${price.toStringAsFixed(2)}';
+    }
+  }
+
   String _getPrimaryStockForLocation(String locationCode) {
     switch (locationCode) {
       case 'US': return 'AAPL';
       case 'DE': return 'SAP';  // German SAP stock
       case 'GB': return 'AZN';  // UK AstraZeneca
       case 'JP': return '7203'; // Toyota
-      case 'FR': return 'ASML'; // ASML (Netherlands/Europe)
+      case 'FR': return 'MC';   // LVMH (French luxury)
       case 'CA': return 'SHOP'; // Shopify (Canadian)
       default: return 'AAPL';
     }
@@ -103,7 +136,7 @@ class _HomeScreenState extends State<Home> {
       case 'SAP': return 'SAP SE';
       case 'AZN': return 'AstraZeneca PLC';
       case '7203': return 'Toyota Motor';
-      case 'ASML': return 'ASML Holding';
+      case 'MC': return 'LVMH';
       case 'SHOP': return 'Shopify Inc.';
       default: return 'Unknown Company';
     }
@@ -115,7 +148,7 @@ class _HomeScreenState extends State<Home> {
         return {
           'symbol': 'AAPL',
           'name': 'Apple Inc.',
-          'price': '\$150.00',
+          'price': '\$175.50',
           'change': '+2.5%',
           'changeColor': Colors.green,
         };
@@ -143,11 +176,27 @@ class _HomeScreenState extends State<Home> {
           'change': '+0.5%',
           'changeColor': Colors.green,
         };
+      case 'FR':
+        return {
+          'symbol': 'MC',
+          'name': 'LVMH',
+          'price': '€785.40',
+          'change': '+1.2%',
+          'changeColor': Colors.green,
+        };
+      case 'CA':
+        return {
+          'symbol': 'SHOP',
+          'name': 'Shopify Inc.',
+          'price': 'C\$85.25',
+          'change': '+3.1%',
+          'changeColor': Colors.green,
+        };
       default:
         return {
           'symbol': 'AAPL',
           'name': 'Apple Inc.',
-          'price': '\$150.00',
+          'price': '\$175.50',
           'change': '+2.5%',
           'changeColor': Colors.green,
         };
@@ -161,21 +210,37 @@ class _HomeScreenState extends State<Home> {
       case 'DE':
         return ['SAP', 'SIE', 'BMW', 'BAS', 'ALV', 'DTE', 'DBK'];
       case 'GB':
-        return ['AZN', 'SHEL', 'BP', 'ULVR', 'GSK', 'LSEG', 'BT'];
+        return ['AZN', 'SHEL', 'BP', 'ULVR', 'GSK', 'LLOY', 'BARC'];
       case 'JP':
         return ['7203', '6758', '9984', '6861', '8306', '9983', '4689'];
       case 'FR':
-        return ['ASML', 'OR', 'SAF', 'AIR', 'BNP', 'TTE', 'MC'];
+        return ['MC', 'OR', 'AIR', 'BNP', 'TTE', 'SAN', 'CAP'];
+      case 'CA':
+        return ['SHOP', 'RY', 'TD', 'CNR', 'SU', 'BMO', 'BNS'];
       default:
         return ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA'];
     }
   }
 
   List<Map<String, dynamic>> _getSectorsForLocation(String locationCode, List<dynamic> stocksData) {
+    // Calculate real sector changes if we have stock data
+    String techChange = '+1.5%';
+    Color techColor = Colors.green;
+
+    if (stocksData.isNotEmpty) {
+      // Use first stock's performance as a base
+      final firstStock = stocksData[0];
+      if (firstStock['changePercent'] != null) {
+        final changePercent = double.tryParse(firstStock['changePercent'].toString()) ?? 1.5;
+        techChange = '${changePercent >= 0 ? '+' : ''}${changePercent.toStringAsFixed(1)}%';
+        techColor = changePercent >= 0 ? Colors.green : Colors.red;
+      }
+    }
+
     switch (locationCode) {
       case 'US':
         return [
-          {'name': 'Technology', 'change': stocksData.isNotEmpty ? '${stocksData[0]['changePercent']}%' : '+2.5%', 'color': Colors.green},
+          {'name': 'Technology', 'change': techChange, 'color': techColor},
           {'name': 'Healthcare', 'change': '+1.8%', 'color': Colors.green},
           {'name': 'Financial', 'change': '+1.2%', 'color': Colors.green},
           {'name': 'Consumer', 'change': '+0.8%', 'color': Colors.green},
@@ -185,7 +250,7 @@ class _HomeScreenState extends State<Home> {
       case 'DE':
         return [
           {'name': 'Automotive', 'change': '+2.1%', 'color': Colors.green},
-          {'name': 'Technology', 'change': '+1.8%', 'color': Colors.green},
+          {'name': 'Technology', 'change': techChange, 'color': techColor},
           {'name': 'Industrial', 'change': '+1.5%', 'color': Colors.green},
           {'name': 'Chemical', 'change': '+1.2%', 'color': Colors.green},
           {'name': 'Financial', 'change': '-0.5%', 'color': Colors.red},
@@ -194,7 +259,7 @@ class _HomeScreenState extends State<Home> {
       case 'GB':
         return [
           {'name': 'Energy', 'change': '+2.2%', 'color': Colors.green},
-          {'name': 'Healthcare', 'change': '+1.9%', 'color': Colors.green},
+          {'name': 'Healthcare', 'change': techChange, 'color': techColor},
           {'name': 'Financial', 'change': '+1.1%', 'color': Colors.green},
           {'name': 'Consumer', 'change': '+0.7%', 'color': Colors.green},
           {'name': 'Telecom', 'change': '-0.8%', 'color': Colors.red},
@@ -202,16 +267,34 @@ class _HomeScreenState extends State<Home> {
         ];
       case 'JP':
         return [
-          {'name': 'Automotive', 'change': '+1.5%', 'color': Colors.green},
+          {'name': 'Automotive', 'change': techChange, 'color': techColor},
           {'name': 'Technology', 'change': '+1.2%', 'color': Colors.green},
           {'name': 'Gaming', 'change': '+2.8%', 'color': Colors.green},
           {'name': 'Financial', 'change': '+0.9%', 'color': Colors.green},
           {'name': 'Industrial', 'change': '+0.6%', 'color': Colors.green},
           {'name': 'Telecom', 'change': '-0.2%', 'color': Colors.red},
         ];
+      case 'FR':
+        return [
+          {'name': 'Luxury', 'change': techChange, 'color': techColor},
+          {'name': 'Energy', 'change': '+1.8%', 'color': Colors.green},
+          {'name': 'Aerospace', 'change': '+1.5%', 'color': Colors.green},
+          {'name': 'Financial', 'change': '+1.1%', 'color': Colors.green},
+          {'name': 'Utilities', 'change': '+0.7%', 'color': Colors.green},
+          {'name': 'Telecom', 'change': '-0.4%', 'color': Colors.red},
+        ];
+      case 'CA':
+        return [
+          {'name': 'Technology', 'change': techChange, 'color': techColor},
+          {'name': 'Financial', 'change': '+1.4%', 'color': Colors.green},
+          {'name': 'Energy', 'change': '+2.1%', 'color': Colors.green},
+          {'name': 'Materials', 'change': '+1.2%', 'color': Colors.green},
+          {'name': 'Utilities', 'change': '+0.8%', 'color': Colors.green},
+          {'name': 'Real Estate', 'change': '+0.3%', 'color': Colors.green},
+        ];
       default:
         return [
-          {'name': 'Technology', 'change': '+1.5%', 'color': Colors.green},
+          {'name': 'Technology', 'change': techChange, 'color': techColor},
           {'name': 'Financial', 'change': '+1.2%', 'color': Colors.green},
           {'name': 'Healthcare', 'change': '+0.8%', 'color': Colors.green},
           {'name': 'Energy', 'change': '+0.5%', 'color': Colors.green},
@@ -293,10 +376,10 @@ class _HomeScreenState extends State<Home> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'VANTYX empowers you to gain attention into stock market, research investment plans, VANTYX, which best open book day movements. – Explore live market stocks, new company updates while being guided by greatness',
+                      'VANTYX empowers you to gain insights into the stock market, research investment plans, and explore live market movements. Discover stocks, company updates, and market trends in ${_getLocationDisplayName(widget.locationCode)}.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: colorScheme.onPrimary.withValues(alpha: 0.8),
+                        color: colorScheme.onPrimary.withOpacity(0.8),
                         fontSize: 12,
                       ),
                     ),
@@ -312,14 +395,14 @@ class _HomeScreenState extends State<Home> {
                 decoration: BoxDecoration(
                   color: colorScheme.secondary,
                   borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: colorScheme.onSecondary.withValues(alpha: 0.3)),
+                  border: Border.all(color: colorScheme.onSecondary.withOpacity(0.3)),
                 ),
                 child: Column(
                   children: [
                     Text(
                       'Featured Stock - ${_getLocationDisplayName(widget.locationCode)}',
                       style: TextStyle(
-                        color: colorScheme.onPrimary,  // Black text
+                        color: colorScheme.onPrimary,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -327,7 +410,12 @@ class _HomeScreenState extends State<Home> {
                     const SizedBox(height: 15),
 
                     if (isLoading)
-                      CircularProgressIndicator(color: colorScheme.onSecondary)
+                      Container(
+                        height: 80,
+                        child: Center(
+                          child: CircularProgressIndicator(color: colorScheme.onSecondary),
+                        ),
+                      )
                     else if (lastViewedStock != null)
                       GestureDetector(
                         onTap: () {
@@ -343,38 +431,63 @@ class _HomeScreenState extends State<Home> {
                           decoration: BoxDecoration(
                             color: colorScheme.primary,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: colorScheme.onSecondary.withValues(alpha: 0.3)),
+                            border: Border.all(color: colorScheme.onSecondary.withOpacity(0.3)),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      lastViewedStock!['name'],
+                                      style: TextStyle(
+                                        color: colorScheme.onPrimary,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      lastViewedStock!['symbol'],
+                                      style: TextStyle(
+                                        color: colorScheme.onPrimary.withOpacity(0.7),
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      lastViewedStock!['price'],
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    lastViewedStock!['name'],
+                                    lastViewedStock!['change'],
                                     style: TextStyle(
-                                      color: colorScheme.onPrimary,
-                                      fontSize: 18,
+                                      color: lastViewedStock!['changeColor'],
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Text(
-                                    lastViewedStock!['price'],
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                    ),
+                                  Icon(
+                                    (lastViewedStock!['changeColor'] == Colors.green)
+                                        ? Icons.trending_up
+                                        : Icons.trending_down,
+                                    color: lastViewedStock!['changeColor'],
+                                    size: 20,
                                   ),
                                 ],
-                              ),
-                              Text(
-                                lastViewedStock!['change'],
-                                style: TextStyle(
-                                  color: lastViewedStock!['changeColor'],
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
                               ),
                             ],
                           ),
@@ -388,7 +501,6 @@ class _HomeScreenState extends State<Home> {
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
-                              // Handle buy action
                               _showTransactionDialog('BUY');
                             },
                             style: ElevatedButton.styleFrom(
@@ -398,10 +510,10 @@ class _HomeScreenState extends State<Home> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               'BUY',
                               style: TextStyle(
-                                color: Colors.white,  // White text on green button
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -411,7 +523,6 @@ class _HomeScreenState extends State<Home> {
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
-                              // Handle sell action
                               _showTransactionDialog('SELL');
                             },
                             style: ElevatedButton.styleFrom(
@@ -421,10 +532,10 @@ class _HomeScreenState extends State<Home> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               'SELL',
                               style: TextStyle(
-                                color: Colors.white,  // White text on red button
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -466,7 +577,7 @@ class _HomeScreenState extends State<Home> {
                     decoration: BoxDecoration(
                       color: colorScheme.secondary,
                       borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color: colorScheme.onSecondary.withValues(alpha: 0.3)),
+                      border: Border.all(color: colorScheme.onSecondary.withOpacity(0.3)),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -474,20 +585,33 @@ class _HomeScreenState extends State<Home> {
                         Text(
                           sector['name'],
                           style: TextStyle(
-                            color: colorScheme.onPrimary,  // Black text
+                            color: colorScheme.onPrimary,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 5),
-                        Text(
-                          sector['change'],
-                          style: TextStyle(
-                            color: sector['color'],
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        const SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              sector['color'] == Colors.green
+                                  ? Icons.trending_up
+                                  : Icons.trending_down,
+                              color: sector['color'],
+                              size: 16,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              sector['change'],
+                              style: TextStyle(
+                                color: sector['color'],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -507,7 +631,7 @@ class _HomeScreenState extends State<Home> {
                 child: Column(
                   children: [
                     Text(
-                      'Ready to take control of your financial future? It\'s built with some new tools, detailed insights, and faster access. VANTYX LUXE Premium subscription gives you unlimited access for better trading decisions to easily understand market data and turn insights into reality.',
+                      'Ready to take control of your financial future? VANTYX provides detailed insights, real-time data, and powerful tools to help you make better trading decisions in ${_getLocationDisplayName(widget.locationCode)} markets.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.8),
@@ -518,6 +642,12 @@ class _HomeScreenState extends State<Home> {
                     ElevatedButton(
                       onPressed: () {
                         // Navigate to learn more or premium
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Premium features coming soon!'),
+                            backgroundColor: Colors.blue,
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colorScheme.onSecondary,
@@ -526,10 +656,10 @@ class _HomeScreenState extends State<Home> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'LEARN MORE',
                         style: TextStyle(
-                          color: Colors.white,  // White text on colored button
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -545,6 +675,8 @@ class _HomeScreenState extends State<Home> {
   }
 
   void _showTransactionDialog(String type) {
+    final TextEditingController quantityController = TextEditingController();
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -563,6 +695,7 @@ class _HomeScreenState extends State<Home> {
               ),
               const SizedBox(height: 10),
               TextField(
+                controller: quantityController,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   labelText: 'Quantity',
@@ -585,15 +718,25 @@ class _HomeScreenState extends State<Home> {
             ),
             ElevatedButton(
               onPressed: () {
-                // Save transaction data locally
-                _saveTransaction(type, lastViewedStock?['symbol'] ?? 'UNKNOWN', 150.00);
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('$type order placed successfully!'),
-                    backgroundColor: type == 'BUY' ? Colors.green : Colors.red,
-                  ),
-                );
+                final quantity = int.tryParse(quantityController.text) ?? 0;
+                if (quantity > 0) {
+                  // Save transaction data locally
+                  _saveTransaction(type, lastViewedStock?['symbol'] ?? 'UNKNOWN', 150.00, quantity);
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('$type order for $quantity shares placed successfully!'),
+                      backgroundColor: type == 'BUY' ? Colors.green : Colors.red,
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please enter a valid quantity'),
+                      backgroundColor: Colors.orange,
+                    ),
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: type == 'BUY' ? Colors.green : Colors.red,
@@ -606,10 +749,10 @@ class _HomeScreenState extends State<Home> {
     );
   }
 
-  void _saveTransaction(String type, String symbol, double price) {
+  void _saveTransaction(String type, String symbol, double price, int quantity) {
     // Here you would save to local storage or send to an API
     // For now, we'll just print the transaction
-    print('Transaction: $type $symbol at \$${price.toStringAsFixed(2)} in ${widget.locationCode}');
+    print('Transaction: $type $quantity shares of $symbol at \$${price.toStringAsFixed(2)} in ${widget.locationCode}');
     // You can use shared_preferences or a local database like SQLite
   }
 }

@@ -5,7 +5,8 @@ class NewsService {
   // Multiple news APIs for better coverage
   static const String _newsApiKey = 'a2aee31b4f70436f956cb602e3f3d734'; // Get from newsapi.org
   static const String _newsApiBaseUrl = 'https://newsapi.org/v2';
-
+  static const String _newsdataApiKey = 'pub_707ed65ef8e84325947fef9490fab014';
+  static const String _newsdataBaseUrl = 'https://newsdata.io/api/1';
   /// Get financial news from NewsAPI
   static Future<List<Map<String, dynamic>>> getFinancialNews({
     String category = 'business',
@@ -14,36 +15,51 @@ class NewsService {
   }) async {
     try {
       final url = Uri.parse(
-          '$_newsApiBaseUrl/top-headlines?'
-              'category=$category&'
+          '$_newsdataBaseUrl/news?'
+              'apikey=$_newsdataApiKey&'
               'country=$country&'
-              'pageSize=$pageSize&'
-              'apiKey=$_newsApiKey'
+              'category=business&'
+              'language=en&'
+              'size=10'
       );
-
-      print('Fetching news from: $url');
+      print('📡 Fetching from NewsData.io: $url');
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        final articles = data['articles'] as List;
+        final articles = data['results'] as List;
 
         return articles.map((article) => {
           'title': article['title'] ?? 'No Title',
           'description': article['description'] ?? 'No description available',
-          'url': article['url'] ?? '',
-          'imageUrl': article['urlToImage'] ?? '',
-          'publishedAt': article['publishedAt'] ?? '',
-          'source': article['source']['name'] ?? 'Unknown',
-          'category': category,
+          'url': article['link'] ?? '',
+          'imageUrl': article['image_url'] ?? '',
+          'publishedAt': article['pubDate'] ?? '',
+          'source': article['source_id'] ?? 'Unknown',
         }).toList();
       } else {
-        print('NewsAPI Error: ${response.statusCode} - ${response.body}');
+        print('NewsData.io Error: ${response.statusCode}');
         return _getFallbackNews();
       }
     } catch (e) {
-      print('Error fetching news from NewsAPI: $e');
+      print('Error with NewsData.io: $e');
       return _getFallbackNews();
+    }
+  }
+
+  static String _getCountryCodeForNewsData(String locationCode) {
+    switch (locationCode.toUpperCase()) {
+      case 'US': return 'us';
+      case 'GB': return 'gb';
+      case 'DE': return 'de';
+      case 'FR': return 'fr';
+      case 'JP': return 'jp';
+      case 'CA': return 'ca';
+      case 'AU': return 'au';
+      case 'IT': return 'it';
+      case 'ES': return 'es';
+      case 'IN': return 'in';
+      default: return 'us';
     }
   }
 
