@@ -5,6 +5,7 @@ import 'proversion.dart';
 import 'dashboard.dart';
 import 'menu.dart';
 import 'user_service.dart';
+import 'all_stocks.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -16,10 +17,11 @@ class Navigation extends StatefulWidget {
 class _NavigationState extends State<Navigation> {
   int screen_index = 0;
   String currentLocationCode = 'DE'; // Default to Germany
-
+  String currentLocationName = "Germany";
   // Create a GlobalKey to force rebuild of pages when location changes
   Key _homeKey = UniqueKey();
   Key _radarKey = UniqueKey();
+  Key _allstocksKey= UniqueKey();
 
   @override
   void initState() {
@@ -46,6 +48,7 @@ class _NavigationState extends State<Navigation> {
       // Force rebuild of Home and Radar pages with new location
       _homeKey = UniqueKey();
       _radarKey = UniqueKey();
+      _allstocksKey = UniqueKey();
     });
 
     // Trigger API refresh for stock data
@@ -173,7 +176,9 @@ class _NavigationState extends State<Navigation> {
         index: screen_index,
         children: [
           Home(key: _homeKey, locationCode: currentLocationCode),        // Index 0 - Home
-          Radar(key: _radarKey, locationCode: currentLocationCode),       // Index 1 - Radar
+          Radar(key: _radarKey, locationCode: currentLocationCode),
+          AllStocksPage(key: _allstocksKey ,locationCode: currentLocationCode, locationName: currentLocationName,),
+
           const Pro(),         // Index 2 - Pro
           const Dashboard(),   // Index 3 - Dashboard
         ],
