@@ -1,16 +1,20 @@
-# first_app
+# Stock-trading Application
+## This project was part of a course on Frontend Development, focused on creating a Trading application for both mobile and Web. This is the mobile version.
 
-A new Flutter project.
+The project focuses on GUI and does not have a database. It is written in Flutter in Android Studio.
+The Website consists of:
+- A register page. This page checks for credentials that match a certain format, e.g. a correct mobile number and email, and then registers the user into Local storage in the browser.
+- Login page
+- Landing page
+- Radar: a page that shows news and trending stocks.
+- Dashboard: where you can see your current balance as well as favourite stocks.
+- Pro
+- Menu: with a functional light/dark theme switch, as well as the possibility to change the location.
 
-## Getting Started
+The website tries to load the marketstack API, and if that fails it reverts to mock-data.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The project was made by:
+- Soroush Bolbolabady
+- Daria Carlberg
+- Maria Berta Rodas Palomo
+- Shresht Sanjay Prasad
